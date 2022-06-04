@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HumanManager : MonoBehaviour
 {
@@ -19,16 +20,12 @@ public class HumanManager : MonoBehaviour
         PubVar.humanHeights = new List<int>(new int[pathNumber]);
         humans = new GameObject[pathNumber];
 
-        //  generate huamns from pool
+        //  generate huamns
         for(int i = 0; i < pathNumber; i++){
             Debug.Log($"create human number.{i}");
             GameObject newHuman = Instantiate(humanPrefab, generateLeftMost.position + i * Vector3.right * intervalLength, Quaternion.identity);
             humans[i] = newHuman;
             PubVar.humanHeights[i] = newHuman.GetComponent<HumanCode>().height;
-            // if(newHuman != null){
-            //     newHuman.transform.position = generateLeftMost.position + i * Vector3.right * intervalLength;
-            //     newHuman.SetActive(true);
-            // }
             InvokeRepeating("CheckGameOver", 3f, 0.2f);
         }
 
@@ -36,13 +33,14 @@ public class HumanManager : MonoBehaviour
     }
 
     //  check if all human die out
-    bool CheckGameOver(){
+    void CheckGameOver(){
         foreach(var i in humans){
-            if(i != null) return true;
+            if(i != null) return;
         }
         Debug.Log("Gameover");
-        return false;
+        SceneManager.LoadScene("end");
     }
+    
 
 
 }

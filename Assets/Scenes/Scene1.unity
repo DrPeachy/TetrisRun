@@ -155,7 +155,7 @@ MonoBehaviour:
   boardLength: 10
   boardHeight: 20
   cubePrefab: {fileID: 6347208234438968695, guid: 14019d5f6184a5840a70851095067438, type: 3}
-  gravityInterval: 1
+  gravityInterval: 0.4
   colorI: {r: 0.011764706, g: 1, b: 0.03137255, a: 1}
   colorO: {r: 1, g: 1, b: 0.29411766, a: 1}
   colorT: {r: 0.9843137, g: 0.14117648, b: 0.14901961, a: 1}

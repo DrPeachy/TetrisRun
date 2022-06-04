@@ -63,6 +63,12 @@ public class TetrisBoard : MonoBehaviour
                 board[i, j].collider = cube.GetComponent<BoxCollider>();
             }
         }
+
+        for(int i = 0; i < boardLength; i++)
+        {
+            board[i, boardHeight - 1].renderer.enabled = false;
+            board[i, boardHeight - 2].renderer.enabled = false;
+        }
     }
 
     // Update is called once per frame

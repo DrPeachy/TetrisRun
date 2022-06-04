@@ -29,6 +29,8 @@ public class TetrisBoard : MonoBehaviour
     (int, int)[] CMT; //current moving tetrimino
     (float, float) CMTpivot;
     tetriminos CMTtype;
+    (int, int)[] PT; //phantom tetrimino
+    (int, int)[] lastPT;
 
     public enum tetriminos
     {
@@ -48,6 +50,14 @@ public class TetrisBoard : MonoBehaviour
     public Color colorS;
     public Color colorZ;
     public Color colorEmpty;
+
+    private MaterialPropertyBlock propertyBlock;
+
+    private void Awake()
+    {
+        if (propertyBlock == null)
+            propertyBlock = new MaterialPropertyBlock();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -69,12 +79,14 @@ public class TetrisBoard : MonoBehaviour
             board[i, boardHeight - 1].renderer.enabled = false;
             board[i, boardHeight - 2].renderer.enabled = false;
         }
+        lastPT = new (int, int)[4];
     }
 
     // Update is called once per frame
     void Update()
     {
         SpawnTetrimino();
+        CalculuatePhantom();
         HandleInput();
         ApplyGravity();
         //RefreshDisplay();
@@ -96,7 +108,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorI;
+                    propertyBlock.SetColor("_Color", colorI);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (4.5f, (float)boardHeight - 1.5f);
             }
@@ -109,7 +122,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorO;
+                    propertyBlock.SetColor("_Color", colorO);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (4.5f, (float)boardHeight - 1.5f);
             }
@@ -122,7 +136,8 @@ public class TetrisBoard : MonoBehaviour
                 for(int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorT;
+                    propertyBlock.SetColor("_Color", colorT);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (4f, (float)boardHeight - 2f);
             }
@@ -135,7 +150,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorJ;
+                    propertyBlock.SetColor("_Color", colorJ);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (4f, (float)boardHeight - 2f);
             }
@@ -148,7 +164,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorL;
+                    propertyBlock.SetColor("_Color", colorL);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (4f, (float)boardHeight - 2f);
             }
@@ -161,7 +178,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorS;
+                    propertyBlock.SetColor("_Color", colorS);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (5f, (float)boardHeight - 2f);
             }
@@ -174,7 +192,8 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorZ;
+                    propertyBlock.SetColor("_Color", colorZ);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot = (5f, (float)boardHeight - 2f);
             }
@@ -199,13 +218,15 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorEmpty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     CMT[i].Item1 -= 1;
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = TetriminoColor(CMTtype);
+                    propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot.Item1 -= 1;
             }
@@ -227,13 +248,15 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorEmpty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     CMT[i].Item1 += 1;
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = TetriminoColor(CMTtype);
+                    propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot.Item1 += 1;
             }
@@ -268,13 +291,15 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorEmpty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMT = newCMT;
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = TetriminoColor(CMTtype);
+                    propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
             }
         }
@@ -308,13 +333,15 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorEmpty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMT = newCMT;
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = TetriminoColor(CMTtype);
+                    propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
             }
         }
@@ -338,13 +365,15 @@ public class TetrisBoard : MonoBehaviour
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = colorEmpty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 for (int i = 0; i < CMT.Length; i++)
                 {
                     CMT[i].Item2 -= 1;
                     board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.moving;
-                    board[CMT[i].Item1, CMT[i].Item2].renderer.material.color = TetriminoColor(CMTtype);
+                    propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
+                    board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
                 }
                 CMTpivot.Item2 -= 1;
             }
@@ -357,6 +386,60 @@ public class TetrisBoard : MonoBehaviour
                 CMT = null;
             }
             lastAppliedGravity = Time.time;
+        }
+    }
+
+    void CalculuatePhantom()
+    {
+        bool contactGround = false;
+        PT = new (int, int)[CMT.Length];
+        for (int i = 0; i < CMT.Length; i++)
+        {
+            PT[i].Item1 = CMT[i].Item1;
+            PT[i].Item2 = CMT[i].Item2;
+        }
+        while (!contactGround)
+        {
+            for (int i = 0; i < PT.Length; i++)
+            {
+                if (PT[i].Item2 - 1 < 0 || board[PT[i].Item1, PT[i].Item2 - 1].cubeStatus == cubeStatus.placed)
+                {
+                    contactGround = true;
+                    break;
+                }
+            }
+            if (!contactGround)
+            {
+                for(int i = 0; i < PT.Length; i++)
+                {
+                    PT[i].Item2 -= 1;
+                }
+            }
+        }
+        for(int i = 0; i < lastPT.Length; i++)
+        {
+            if(board[lastPT[i].Item1, lastPT[i].Item2].cubeStatus == cubeStatus.phantom)
+            {
+                board[lastPT[i].Item1, lastPT[i].Item2].cubeStatus = cubeStatus.empty;
+                propertyBlock.SetColor("_Color", colorEmpty);
+                board[lastPT[i].Item1, lastPT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
+            }
+        }
+        for(int i = 0; i < PT.Length; i++)
+        {
+            if(board[PT[i].Item1, PT[i].Item2].cubeStatus != cubeStatus.moving)
+            {
+                board[PT[i].Item1, PT[i].Item2].cubeStatus = cubeStatus.phantom;
+                Color phantomColor = TetriminoColor(CMTtype);
+                phantomColor.a = 0.2f;
+                propertyBlock.SetColor("_Color", phantomColor);
+                board[PT[i].Item1, PT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
+            }
+        }
+        for(int i = 0; i < PT.Length; i++)
+        {
+            lastPT[i].Item1 = PT[i].Item1;
+            lastPT[i].Item2 = PT[i].Item2;
         }
     }
 
@@ -418,10 +501,4 @@ public class TetrisBoard : MonoBehaviour
         }
     }
 
-    void OnDrawGizmosSelected()
-    {
-        // Draw a yellow sphere at the transform's position
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawSphere(new Vector3(CMTpivot.Item1, CMTpivot.Item2, 0), 0.1f);
-    }
 }

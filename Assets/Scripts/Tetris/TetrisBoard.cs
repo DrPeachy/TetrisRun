@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TetrisBoard : MonoBehaviour
 {
+    public static TetrisBoard Instance;
+    //
     public int boardLength;
     public int boardHeight;
     public GameObject cubePrefab;
@@ -55,6 +57,7 @@ public class TetrisBoard : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
         if (propertyBlock == null)
             propertyBlock = new MaterialPropertyBlock();
     }

@@ -17,16 +17,18 @@ public class StartMenuHandler : MonoBehaviour
 
 
     public void SaveName(){
-        DataManager.Instance.playerName = playerNameText.text;
-        PlayerManager.Instance.SetPlayerName();
+        if(playerNameText.text != ""){
+            DataManager.Instance.playerName = playerNameText.text;
+            PlayerManager.Instance.SetPlayerName();
+        }
     }
 
     public void LoadScene(string sceneName)
     {
-        if(playerNameText.text == ""){
-            DataManager.Instance.playerName = "Player" + PlayerPrefs.GetString("PlayerID");
-            PlayerManager.Instance.SetPlayerName();
-        }
+        // if(playerNameText.text == ""){
+        //     DataManager.Instance.playerName = "Player" + PlayerPrefs.GetString("PlayerID");
+        //     PlayerManager.Instance.SetPlayerName();
+        // }
         SceneManager.LoadScene(sceneName);
     }
     

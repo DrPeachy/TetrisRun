@@ -1332,6 +1332,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 821ffc4306d8d5844a18ef5ce93d17af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leaderboardPlayerNameText: 
+  leaderboardPlayerScoreText: 
 --- !u!4 &1153754098
 Transform:
   m_ObjectHideFlags: 0
@@ -2194,7 +2196,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_CharacterLimit: 8
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:

@@ -103,6 +103,7 @@ public class TetrisBoard : MonoBehaviour
         if(transform.position.z < Camera.main.transform.position.z){
             Destroy(gameObject);
             BoardHandler.Instance.hasBoard = false;
+            HumanManager.Instance.AddRoundScore();
         }
 
     }

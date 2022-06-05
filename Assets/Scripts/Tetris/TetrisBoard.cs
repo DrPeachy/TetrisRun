@@ -24,6 +24,7 @@ public class TetrisBoard : MonoBehaviour
         public cubeStatus cubeStatus;
         public MeshRenderer renderer;
         public BoxCollider collider;
+        public GameObject redCross;
     }
 
     public cubeProporties[,] board;
@@ -51,6 +52,10 @@ public class TetrisBoard : MonoBehaviour
     public Color colorS;
     public Color colorZ;
     public Color colorEmpty;
+    public float phantomTransparency = 0.2f;
+    public Color colorGarbage;
+
+    public bool generateGarbage;
 
     private MaterialPropertyBlock propertyBlock;
 
@@ -73,6 +78,7 @@ public class TetrisBoard : MonoBehaviour
                 board[i, j].cubeStatus = cubeStatus.empty;
                 board[i, j].renderer = cube.GetComponent<MeshRenderer>();
                 board[i, j].collider = cube.GetComponent<BoxCollider>();
+                board[i, j].redCross = cube.transform.GetChild(0).gameObject;
             }
         }
 
@@ -83,6 +89,22 @@ public class TetrisBoard : MonoBehaviour
         }
         lastPT = new (int, int)[4];
 
+        if (generateGarbage)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                int gap = Random.Range(0, boardLength);
+                for(int i = 0; i < boardLength; i++)
+                {
+                    if(i != gap)
+                    {
+                        board[i, j].cubeStatus = cubeStatus.placed;
+                        propertyBlock.SetColor("_Color", colorGarbage);
+                        board[i, j].renderer.SetPropertyBlock(propertyBlock);
+                    }
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -93,6 +115,8 @@ public class TetrisBoard : MonoBehaviour
         HandleInput();
         ApplyGravity();
         ClearLines();
+
+        PlaceRedCross();
         //RefreshDisplay();
 
     }
@@ -435,7 +459,7 @@ public class TetrisBoard : MonoBehaviour
             {
                 board[PT[i].Item1, PT[i].Item2].cubeStatus = cubeStatus.phantom;
                 Color phantomColor = TetriminoColor(CMTtype);
-                phantomColor.a = 0.2f;
+                phantomColor.a = phantomTransparency;
                 propertyBlock.SetColor("_Color", phantomColor);
                 board[PT[i].Item1, PT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
             }
@@ -539,6 +563,28 @@ public class TetrisBoard : MonoBehaviour
                 else if (board[i, j].cubeStatus == cubeStatus.phantom)
                 {
                     board[i, j].renderer.material.color = Color.green;
+                }
+            }
+        }
+    }
+
+    void PlaceRedCross()
+    {
+        {
+            for (int i = 0; i < boardLength; i++)
+            {
+                for (int j = 0; j < boardHeight; j++)
+                {
+                    MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                    board[i, j].renderer.GetPropertyBlock(materialPropertyBlock);
+                    if (materialPropertyBlock.GetColor("_Color") == colorGarbage)
+                    {
+                        board[i, j].redCross.SetActive(true);
+                    }
+                    else
+                    {
+                        board[i, j].redCross.SetActive(false);
+                    }
                 }
             }
         }

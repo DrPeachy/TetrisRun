@@ -33,10 +33,14 @@ public class HumanCode : MonoBehaviour
     private void Update() {
         if(true){
             //Collider[] tetris = Physics.OverlapBox(transform.position, new Vector3(0.5f, _collider.bounds.size.y, 0.5f), Quaternion.identity, tetrisMask);
-            if(Physics.Raycast(transform.position, Vector3.forward, 0.1f, tetrisMask)){
+            if(Physics.Raycast(transform.position, Vector3.forward, 0.5f, tetrisMask)){
                 for(int i = 0; i < height; i++){
-                    if(TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.phantom &&
-                        TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.empty){
+                    MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                    TetrisBoard.Instance.board[index, i].renderer.GetPropertyBlock(materialPropertyBlock);
+                    if (TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.phantom &&
+                        TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.empty &&
+                        materialPropertyBlock.GetColor("_Color") == TetrisBoard.Instance.colorGarbage)
+                    {
                             Destroy(gameObject);
                         }
                 }

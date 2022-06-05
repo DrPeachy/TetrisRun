@@ -18,7 +18,7 @@ public class BoardMover : MonoBehaviour
     {
         // move board backward
         transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-        if (transform.position.z < Camera.main.transform.position.z)
+        if (transform.position.z < Camera.main.transform.position.z - 1)
         {
             Destroy(gameObject);
             BoardHandler.Instance.hasBoard = false;

@@ -16,10 +16,16 @@ public class PlayerManager : MonoBehaviour
             return;
         }
     }
-    
+
     void Start()
     {
-        StartCoroutine(LoginRoutine());
+        StartCoroutine(SetupRoutine());
+
+    }
+
+    IEnumerator SetupRoutine(){
+        yield return LoginRoutine();
+        yield return LeaderBoard.Instance.FetchTopFiftyscoresRoutine();
     }
 
     public void SetPlayerName(){

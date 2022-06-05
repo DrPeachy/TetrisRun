@@ -76,13 +76,14 @@ public class HumanManager : MonoBehaviour
         scoreText.text = $"{DataManager.Instance.playerName}'s score: {DataManager.Instance.playerScore}";
     }
 
-    
+
     //  check if all human die out
     void CheckGameOver(){
         foreach(var i in humans){
             if(i != null) return;
         }
         Debug.Log("Gameover");
+        StartCoroutine(LeaderBoard.Instance.SubmitScoreRoutine(DataManager.Instance.playerScore));
         SceneManager.LoadScene("EndScene");
     }
 

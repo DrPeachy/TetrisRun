@@ -6,14 +6,15 @@ using UnityEngine;
 public class HumanCode : MonoBehaviour
 {
     // human movement
-    [SerializeField] private float speed = 1f;
-    public float speedIncrement = 0.08f;
+    //[SerializeField] private float speed = 1f;
+    //public float speedIncrement = 0.08f;
 
     // obstacle detect
     public LayerMask tetrisMask;
     [SerializeField] private Rigidbody _rigidBody;
     private Collider _collider;
     public int index;
+<<<<<<< Updated upstream
     public humanScale _humanScale;
     //  human scale
     public class humanScale{
@@ -42,18 +43,19 @@ public class HumanCode : MonoBehaviour
         public int height;
     }
 
+=======
+    public int height;
+>>>>>>> Stashed changes
 
     //  animator
-    [SerializeField] private Animator _animator;
+    //[SerializeField] private Animator _animator;
 
     private void Awake() {
         // set height
-        _humanScale = humanScale.GetRandomHeight();
-        transform.localScale = new Vector3(_humanScale.scale, _humanScale.scale, _humanScale.scale);
 
         _collider = GetComponent<Collider>();
         _rigidBody = GetComponent<Rigidbody>();
-        _animator = GetComponent<Animator>();
+        //_animator = GetComponent<Animator>();
     }
 
     private void Start() {
@@ -63,7 +65,7 @@ public class HumanCode : MonoBehaviour
         if(true){
             //Collider[] tetris = Physics.OverlapBox(transform.position, new Vector3(0.5f, _collider.bounds.size.y, 0.5f), Quaternion.identity, tetrisMask);
             if(Physics.Raycast(transform.position, Vector3.forward, 0.1f, tetrisMask)){
-                for(int i = 0; i < _humanScale.height; i++){
+                for(int i = 0; i < height; i++){
                     if(TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.phantom &&
                         TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.empty){
                             Destroy(gameObject);
@@ -71,9 +73,9 @@ public class HumanCode : MonoBehaviour
                 }
             }
         }
-        speed += Time.deltaTime * speedIncrement;
-        _rigidBody.velocity = Vector3.forward * speed;
-        _animator.SetFloat("Speed", speed);
+        // speed += Time.deltaTime * speedIncrement;
+        // _rigidBody.velocity = Vector3.forward * speed;
+        //_animator.SetFloat("Speed", speed);
     }
 
 

@@ -448,17 +448,17 @@ public class TetrisBoard : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            for (int i = 0; i < CMT.Length; i++)
+            {
+                board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
+                propertyBlock.SetColor("_Color", colorEmpty);
+                board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
+            }
             for (int i = 0; i < PT.Length; i++)
             {
                 board[PT[i].Item1, PT[i].Item2].cubeStatus = cubeStatus.placed;
                 propertyBlock.SetColor("_Color", TetriminoColor(CMTtype));
                 board[PT[i].Item1, PT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
-            }
-            for(int i = 0; i < CMT.Length; i++)
-            {
-                board[CMT[i].Item1, CMT[i].Item2].cubeStatus = cubeStatus.empty;
-                propertyBlock.SetColor("_Color", colorEmpty);
-                board[CMT[i].Item1, CMT[i].Item2].renderer.SetPropertyBlock(propertyBlock);
             }
             CMT = null;
             SpawnTetrimino();

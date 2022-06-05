@@ -5,6 +5,7 @@ using UnityEngine;
 public class TetrisBoard : MonoBehaviour
 {
     public static TetrisBoard Instance;
+    float moveSpeed;
     //
     public int boardLength;
     public int boardHeight;
@@ -83,6 +84,9 @@ public class TetrisBoard : MonoBehaviour
             board[i, boardHeight - 2].renderer.enabled = false;
         }
         lastPT = new (int, int)[4];
+
+        // Get speed from boardHandler
+        moveSpeed = BoardHandler.Instance.moveSpeed;
     }
 
     // Update is called once per frame
@@ -93,6 +97,13 @@ public class TetrisBoard : MonoBehaviour
         HandleInput();
         ApplyGravity();
         //RefreshDisplay();
+
+        // move board backward
+        transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
+        if(transform.position.z < Camera.main.transform.position.z){
+            Destroy(gameObject);
+            BoardHandler.Instance.hasBoard = false;
+        }
 
     }
 
@@ -521,5 +532,7 @@ public class TetrisBoard : MonoBehaviour
             return colorZ;
         }
     }
+
+    
 
 }

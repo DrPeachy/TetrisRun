@@ -14,38 +14,7 @@ public class HumanCode : MonoBehaviour
     [SerializeField] private Rigidbody _rigidBody;
     private Collider _collider;
     public int index;
-<<<<<<< Updated upstream
-    public humanScale _humanScale;
-    //  human scale
-    public class humanScale{
-        public static readonly humanScale Short = new humanScale(0.5f);
-        public static readonly humanScale Medium = new humanScale(0.5f);
-        public static readonly humanScale Tall = new humanScale(0.5f);
-        public static humanScale GetRandomHeight(){
-            int i = Random.Range(0, 3);
-            switch(i){
-                case 0:
-                    return humanScale.Short;
-                case 1:
-                    return humanScale.Medium;
-                case 2:
-                    return humanScale.Tall;
-                default:
-                    return humanScale.Medium;
-            }
-        }
-        private humanScale(float scale)
-            {
-                this.scale = scale;
-                this.height = (int)(2 * scale);
-            }
-        public float scale;
-        public int height;
-    }
-
-=======
     public int height;
->>>>>>> Stashed changes
 
     //  animator
     //[SerializeField] private Animator _animator;

@@ -51,14 +51,6 @@ public class HumanManager : MonoBehaviour
         }
     }
 
-    //  check if all human die out
-    void CheckGameOver(){
-        foreach(var i in humans){
-            if(i != null) return;
-        }
-        Debug.Log("Gameover");
-        SceneManager.LoadScene("EndScene");
-    }
     
     //  for debug
     IEnumerator ResetHuman(){
@@ -73,14 +65,25 @@ public class HumanManager : MonoBehaviour
     }
 
     public void AddRoundScore(){
+        float multiplier = BoardHandler.Instance.moveSpeed;
         int sum = 0;
         for(int i = 0; i < pathNumber; i++){
             if(humans[i] != null){
-                sum += humanCodes[i]._humanScale.height * 100;
+                sum += humanCodes[i]._humanScale.height * (int)(100f * multiplier);
             }
         }
         DataManager.Instance.playerScore += sum;
         scoreText.text = $"{DataManager.Instance.playerName}'s score: {DataManager.Instance.playerScore}";
+    }
+
+    
+    //  check if all human die out
+    void CheckGameOver(){
+        foreach(var i in humans){
+            if(i != null) return;
+        }
+        Debug.Log("Gameover");
+        SceneManager.LoadScene("EndScene");
     }
 
 }

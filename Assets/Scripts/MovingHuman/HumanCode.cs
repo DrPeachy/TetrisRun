@@ -71,7 +71,6 @@ public class HumanCode : MonoBehaviour
                 }
             }
         }
-
         speed += Time.deltaTime * speedIncrement;
         _rigidBody.velocity = Vector3.forward * speed;
         _animator.SetFloat("Speed", speed);

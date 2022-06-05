@@ -101,9 +101,9 @@ public class TetrisBoard : MonoBehaviour
         // move board backward
         transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
         if(transform.position.z < Camera.main.transform.position.z){
-            Destroy(gameObject);
             BoardHandler.Instance.hasBoard = false;
             HumanManager.Instance.AddRoundScore();
+            Destroy(gameObject);
         }
 
     }

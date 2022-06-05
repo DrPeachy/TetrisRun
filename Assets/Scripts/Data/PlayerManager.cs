@@ -5,10 +5,32 @@ using LootLocker.Requests;
 
 public class PlayerManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static PlayerManager Instance;
+
+    private void Awake() {
+        if(Instance == null){
+            Instance = this;
+            DontDestroyOnLoad(Instance);
+        }else{
+            Destroy(gameObject);
+            return;
+        }
+    }
+    
     void Start()
     {
         StartCoroutine(LoginRoutine());
+    }
+
+    public void SetPlayerName(){
+        LootLockerSDKManager.SetPlayerName(DataManager.Instance.playerName, (response) =>
+        {
+            if(response.success){
+                Debug.Log("Successfully set player name");
+            }else{
+                Debug.Log("Could not set player name" + response.Error);
+            }
+        });
     }
 
     IEnumerator LoginRoutine(){

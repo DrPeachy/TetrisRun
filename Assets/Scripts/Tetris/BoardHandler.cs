@@ -22,9 +22,9 @@ public class BoardHandler : MonoBehaviour
 
     void generateBoard(){
         if(!hasBoard){
+            hasBoard = true;
             Instantiate(boardPrefab, generatePosition.position, Quaternion.identity);
             moveSpeed += speedIncrement;
-            hasBoard = true;
         }
     }
 

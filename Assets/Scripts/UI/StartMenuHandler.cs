@@ -15,11 +15,13 @@ public class StartMenuHandler : MonoBehaviour
 
 
 
-    public void SaveName(string playerName){
+    public void SaveName(){
         DataManager.Instance.playerName = playerNameText.text;
     }
+
     public void LoadScene(string sceneName)
     {
+        if(playerNameText.text == null) DataManager.Instance.playerName = "Player";
         SceneManager.LoadScene(sceneName);
     }
     

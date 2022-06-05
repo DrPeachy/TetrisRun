@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 449064073411233800}
   - component: {fileID: 449064073411233801}
+  - component: {fileID: -7022653724617148666}
   m_Layer: 0
   m_Name: TetrisBoard
   m_TagString: Untagged
@@ -44,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   boardLength: 10
-  boardHeight: 22
+  boardHeight: 12
   cubePrefab: {fileID: 6347208234438968695, guid: 14019d5f6184a5840a70851095067438, type: 3}
   gravityInterval: 0.4
   colorI: {r: 0.011764706, g: 1, b: 0.03137255, a: 1}
@@ -55,3 +56,16 @@ MonoBehaviour:
   colorS: {r: 0.1254902, g: 1, b: 1, a: 1}
   colorZ: {r: 1, g: 1, b: 1, a: 1}
   colorEmpty: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &-7022653724617148666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449064073411233806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3794a72b5ac51a47a824f20b0b2d8bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 0

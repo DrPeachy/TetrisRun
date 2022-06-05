@@ -5,8 +5,6 @@ using UnityEngine;
 public class TetrisBoard : MonoBehaviour
 {
     public static TetrisBoard Instance;
-    float moveSpeed;
-    //
     public int boardLength;
     public int boardHeight;
     public GameObject cubePrefab;
@@ -85,8 +83,6 @@ public class TetrisBoard : MonoBehaviour
         }
         lastPT = new (int, int)[4];
 
-        // Get speed from boardHandler
-        moveSpeed = BoardHandler.Instance.moveSpeed;
     }
 
     // Update is called once per frame
@@ -96,15 +92,8 @@ public class TetrisBoard : MonoBehaviour
         CalculuatePhantom();
         HandleInput();
         ApplyGravity();
+        ClearLines();
         //RefreshDisplay();
-
-        // move board backward
-        transform.Translate(Vector3.back * moveSpeed * Time.deltaTime);
-        if(transform.position.z < Camera.main.transform.position.z){
-            Destroy(gameObject);
-            BoardHandler.Instance.hasBoard = false;
-            HumanManager.Instance.AddRoundScore();
-        }
 
     }
 
@@ -473,6 +462,59 @@ public class TetrisBoard : MonoBehaviour
             }
             CMT = null;
             SpawnTetrimino();
+        }
+    }
+
+    void ClearLines()
+    {
+        for(int j = 0; j < boardHeight; j++)
+        {
+            bool lineFull = true;
+            for(int i = 0; i < boardLength; i++)
+            {
+                if(board[i, j].cubeStatus != cubeStatus.placed)
+                {
+                    lineFull = false;
+                    break;
+                }
+            }
+            if (lineFull)
+            {
+                for (int i = 0; i < boardLength; i++)
+                {
+                    board[i, j].cubeStatus = cubeStatus.empty;
+                    propertyBlock.SetColor("_Color", colorEmpty);
+                    board[i, j].renderer.SetPropertyBlock(propertyBlock);
+                }
+                List<((int, int), Color)> placedBlocks = new List<((int, int), Color)>();
+                for(int k = j + 1; k < boardHeight; k++)
+                {
+                    for(int l = 0; l < boardLength; l++)
+                    {
+                        if(board[l, k].cubeStatus == cubeStatus.placed)
+                        {
+                            MaterialPropertyBlock materialPropertyBlock = new MaterialPropertyBlock();
+                            board[l, k].renderer.GetPropertyBlock(materialPropertyBlock);
+                            placedBlocks.Add(((l, k), materialPropertyBlock.GetColor("_Color")));
+                            board[l, k].cubeStatus = cubeStatus.empty;
+                            propertyBlock.SetColor("_Color", colorEmpty);
+                            board[l, k].renderer.SetPropertyBlock(propertyBlock);
+                        }
+                    }
+                }
+                for(int a = 0; a < placedBlocks.Count; a++)
+                {
+                    var block = placedBlocks[a];
+                    block.Item1.Item2 -= 1;
+                    placedBlocks[a] = block;
+                }
+                for (int a = 0; a < placedBlocks.Count; a++)
+                {
+                    board[placedBlocks[a].Item1.Item1, placedBlocks[a].Item1.Item2].cubeStatus = cubeStatus.placed;
+                    propertyBlock.SetColor("_Color", placedBlocks[a].Item2);
+                    board[placedBlocks[a].Item1.Item1, placedBlocks[a].Item1.Item2].renderer.SetPropertyBlock(propertyBlock);
+                }
+            }
         }
     }
 

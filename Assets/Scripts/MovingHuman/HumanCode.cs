@@ -18,8 +18,8 @@ public class HumanCode : MonoBehaviour
     //  human scale
     public class humanScale{
         public static readonly humanScale Short = new humanScale(0.5f);
-        public static readonly humanScale Medium = new humanScale(1f);
-        public static readonly humanScale Tall = new humanScale(1.5f);
+        public static readonly humanScale Medium = new humanScale(0.5f);
+        public static readonly humanScale Tall = new humanScale(0.5f);
         public static humanScale GetRandomHeight(){
             int i = Random.Range(0, 3);
             switch(i){

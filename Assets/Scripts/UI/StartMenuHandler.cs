@@ -11,9 +11,13 @@ using UnityEditor;
 public class StartMenuHandler : MonoBehaviour
 {
 
+    public TMP_InputField playerNameText;
 
 
 
+    public void SaveName(string playerName){
+        DataManager.Instance.playerName = playerNameText.text;
+    }
     public void LoadScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);

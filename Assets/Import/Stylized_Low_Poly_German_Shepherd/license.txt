@@ -1,0 +1,11 @@
+Model Information:
+* title:	Stylized Low Poly German Shepherd
+* source:	https://sketchfab.com/3d-models/stylized-low-poly-german-shepherd-18d8fbe184c5448283762893b6ea9752
+* author:	DreamNoms (https://sketchfab.com/DreamNoms)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Stylized Low Poly German Shepherd" (https://sketchfab.com/3d-models/stylized-low-poly-german-shepherd-18d8fbe184c5448283762893b6ea9752) by DreamNoms (https://sketchfab.com/DreamNoms) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

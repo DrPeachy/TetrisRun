@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cubeman (Blender)
+* source:	https://sketchfab.com/3d-models/cubeman-blender-14080d0b2d454ae495de619bb4d1b33d
+* author:	Mujib (https://sketchfab.com/nightthief81)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cubeman (Blender)" (https://sketchfab.com/3d-models/cubeman-blender-14080d0b2d454ae495de619bb4d1b33d) by Mujib (https://sketchfab.com/nightthief81) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

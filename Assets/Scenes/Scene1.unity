@@ -1117,7 +1117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boardPrefab: {fileID: 449064073411233806, guid: fe146461359ec904088d95a3c058dc7f, type: 3}
   moveSpeed: 5
-  speedIncrement: 0.3
+  speedIncrement: 1
   hasBoard: 0
   generatePosition: {fileID: 1972826220}
 --- !u!4 &627040605

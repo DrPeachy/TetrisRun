@@ -28,7 +28,7 @@ public class HumanManager : MonoBehaviour
     private void Start() {
         GenerateCreature();
         //StartCoroutine(ResetHuman());
-        scoreText.text = $"{DataManager.Instance.playerName}'s score: {DataManager.Instance.playerScore}";
+        scoreText.text = $"score: {DataManager.Instance.playerScore}";
         
     }
     void GenerateCreature(){
@@ -107,7 +107,7 @@ public class HumanManager : MonoBehaviour
             }
         }
         DataManager.Instance.playerScore += sum;
-        scoreText.text = $"{DataManager.Instance.playerName}'s score: {DataManager.Instance.playerScore}";
+        scoreText.text = $"score: {DataManager.Instance.playerScore}";
     }
 
 

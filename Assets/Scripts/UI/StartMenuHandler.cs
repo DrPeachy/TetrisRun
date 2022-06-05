@@ -14,24 +14,36 @@ public class StartMenuHandler : MonoBehaviour
 
     public TMP_InputField playerNameText;
 
+    public GameObject savedMessage;
 
 
-    public void SaveName(){
+    public void SavePlayerName(){
+        StartCoroutine(SaveName());
+    }
+    IEnumerator SaveName(){
         if(playerNameText.text != ""){
             DataManager.Instance.playerName = playerNameText.text;
             PlayerManager.Instance.SetPlayerName();
+            yield return new WaitUntil(() => !savedMessage.activeInHierarchy);
+            yield return ShowSavedMessage();
         }
     }
 
     public void LoadScene(string sceneName)
     {
-        if(playerNameText.text == ""){
-            DataManager.Instance.playerName = PlayerPrefs.GetString("PlayerID");
-            PlayerManager.Instance.SetPlayerName();
-        }
+        // if(playerNameText.text == ""){
+        //     DataManager.Instance.playerName = PlayerPrefs.GetString("PlayerID");
+        //     PlayerManager.Instance.SetPlayerName();
+        // }
         SceneManager.LoadScene(sceneName);
     }
     
+    IEnumerator ShowSavedMessage(){
+        savedMessage.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        savedMessage.SetActive(false);
+    }
+
     public void Exit()
     {
 #if UNITY_EDITOR

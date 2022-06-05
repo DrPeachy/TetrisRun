@@ -10,13 +10,19 @@ public class LeaderBoardHandler : MonoBehaviour
     public TextMeshProUGUI playerScoreText;
     void Start()
     {
-        StartCoroutine(LeaderBoard.Instance.FetchTopFiftyscoresRoutine());
-        playerNameText.text = LeaderBoard.Instance.leaderboardPlayerNameText;
-        playerScoreText.text = LeaderBoard.Instance.leaderboardPlayerScoreText;
-    }
+        StartCoroutine(LoadBoard());
 
+    }
     public void BackToMenu(){
         SceneManager.LoadScene("StartMenu");
+    }
+    
+    IEnumerator LoadBoard(){
+        playerNameText.text = "Loading..";
+        yield return LeaderBoard.Instance.FetchTopFiftyscoresRoutine();
+        yield return new WaitForSeconds(1f);
+        playerNameText.text = LeaderBoard.Instance.leaderboardPlayerNameText;
+        playerScoreText.text = LeaderBoard.Instance.leaderboardPlayerScoreText;
     }
 
 

@@ -98,21 +98,30 @@ public class TetrisBoard : MonoBehaviour
                 if(j == 0)
                 {
                     width = Random.Range(2, 7);
+                    for (int i = 0; i < boardLength; i++)
+                    {
+                        if (i != gap)//i <= gap - width || i >= gap + width)
+                        {
+                            board[i, j].cubeStatus = cubeStatus.placed;
+                            propertyBlock.SetColor("_Color", colorGarbage);
+                            board[i, j].renderer.SetPropertyBlock(propertyBlock);
+                        }
+                    }
                 }
                 else
                 {
                     width = Random.Range(1, 4);
-                }
-                //Debug.Log(gap + " " + width);
-                for(int i = 0; i < boardLength; i++)
-                {
-                    if(i != gap)//i <= gap - width || i >= gap + width)
+                    for (int i = 0; i < boardLength; i++)
                     {
-                        board[i, j].cubeStatus = cubeStatus.placed;
-                        propertyBlock.SetColor("_Color", colorGarbage);
-                        board[i, j].renderer.SetPropertyBlock(propertyBlock);
+                        if (i != gap)//i <= gap - width || i >= gap + width)
+                        {
+                            board[i, j].cubeStatus = cubeStatus.placed;
+                            propertyBlock.SetColor("_Color", colorGarbage);
+                            board[i, j].renderer.SetPropertyBlock(propertyBlock);
+                        }
                     }
                 }
+                //Debug.Log(gap + " " + width);
             }
         }
     }

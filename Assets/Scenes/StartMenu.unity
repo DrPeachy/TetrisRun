@@ -1839,7 +1839,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: TetrisRun
+  m_text: TetrisRush
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 52e12c8e367628443b62b228afeaf909, type: 2}
   m_sharedMaterial: {fileID: -6208029893405497406, guid: 52e12c8e367628443b62b228afeaf909, type: 2}

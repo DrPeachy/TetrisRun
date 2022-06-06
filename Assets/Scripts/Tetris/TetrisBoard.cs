@@ -94,11 +94,19 @@ public class TetrisBoard : MonoBehaviour
             for(int j = 0; j < 3; j++)
             {
                 int gap = Random.Range(0, boardLength);
-                int width = Random.Range(1, 4);
-                Debug.Log(gap + " " + width);
+                int width;
+                if(j == 0)
+                {
+                    width = Random.Range(2, 7);
+                }
+                else
+                {
+                    width = Random.Range(1, 4);
+                }
+                //Debug.Log(gap + " " + width);
                 for(int i = 0; i < boardLength; i++)
                 {
-                    if(i <= gap - width || i >= gap + width)
+                    if(i != gap)//i <= gap - width || i >= gap + width)
                     {
                         board[i, j].cubeStatus = cubeStatus.placed;
                         propertyBlock.SetColor("_Color", colorGarbage);

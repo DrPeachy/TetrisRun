@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class HumanManager : MonoBehaviour
 {
     public static HumanManager Instance;
@@ -20,6 +23,7 @@ public class HumanManager : MonoBehaviour
 
     //  UI
     public TextMeshProUGUI scoreText;
+    public GameObject gameoverPage;
 
     //  Audio
     public AudioSource humanAudio;
@@ -33,10 +37,22 @@ public class HumanManager : MonoBehaviour
     }
 
     private void Start() {
+        Time.timeScale = 1;
+        DataManager.Instance.playerScore = 0;
         GenerateCreature();
         //StartCoroutine(ResetHuman());
         scoreText.text = $"score: {DataManager.Instance.playerScore}";
         
+    }
+
+    private void Update() {
+#if UNITY_EDITOR
+        if(Input.GetKeyDown(KeyCode.G)){
+            foreach(var i in humans){
+                Destroy(i);
+            }
+        }
+#endif
     }
     void GenerateCreature(){
         //  clear out global height list
@@ -143,14 +159,17 @@ public class HumanManager : MonoBehaviour
 
     //  check if all human die out
     void CheckGameOver(){
-        foreach(var i in humans){
-            if(i != null) return;
+        if(!PauseMenu.Instance.isOvered){
+            foreach(var i in humans){
+                if(i != null) return;
+            }
+            Debug.Log("Gameover");
+            loseAudio.PlayOneShot(loseAudio.clip);
+            Time.timeScale = 0;
+            PauseMenu.Instance.isOvered = true;
+            gameoverPage.SetActive(true);
+            StartCoroutine(LeaderBoard.Instance.SubmitScoreRoutine(DataManager.Instance.playerScore));
         }
-        Debug.Log("Gameover");
-        loseAudio.PlayOneShot(loseAudio.clip);
-        StartCoroutine(LeaderBoard.Instance.SubmitScoreRoutine(DataManager.Instance.playerScore));
-        Time.timeScale = 0;
-        //SceneManager.LoadScene("EndScene");
     }
 
 }

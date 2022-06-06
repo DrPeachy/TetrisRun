@@ -9,18 +9,26 @@ using UnityEditor;
 
 public class PauseMenu : MonoBehaviour
 {
+    public static PauseMenu Instance;
+    public bool isOvered = false;
     public GameObject pausePage;
     bool isPaused = false;
 
-
+    private void Awake() {
+        Instance = this;
+    }
     private void Update() {
-        if(Input.GetKeyDown(KeyCode.Escape)){
+        if(Input.GetKeyDown(KeyCode.Escape) && !isOvered){
             if(isPaused){
                 Resume();
             }else{
                 Pause();
             }
         }
+    }
+
+    public void LoadScene(string sceneName){
+        SceneManager.LoadScene(sceneName);
     }
     public void Pause(){
         pausePage.SetActive(true);

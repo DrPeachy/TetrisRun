@@ -20,7 +20,7 @@ public class LeaderBoardHandler : MonoBehaviour
     IEnumerator LoadBoard(){
         playerNameText.text = "Loading..";
         yield return LeaderBoard.Instance.FetchTopFiftyscoresRoutine();
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         playerNameText.text = LeaderBoard.Instance.leaderboardPlayerNameText;
         playerScoreText.text = LeaderBoard.Instance.leaderboardPlayerScoreText;
     }

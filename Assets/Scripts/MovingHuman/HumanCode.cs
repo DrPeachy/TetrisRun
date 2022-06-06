@@ -16,6 +16,16 @@ public class HumanCode : MonoBehaviour
     public int index;
     public int height;
 
+    AudioSource _dieSound;
+
+    public enum type{
+        human,
+        cat,
+        dog
+    }
+
+    public type _type;
+    public bool hasDied = false;
     //  animator
     //[SerializeField] private Animator _animator;
 
@@ -24,6 +34,7 @@ public class HumanCode : MonoBehaviour
 
         _collider = GetComponent<Collider>();
         _rigidBody = GetComponent<Rigidbody>();
+        _dieSound = transform.Find("die").GetComponent<AudioSource>();
         //_animator = GetComponent<Animator>();
     }
 
@@ -41,15 +52,15 @@ public class HumanCode : MonoBehaviour
                         TetrisBoard.Instance.board[index, i].cubeStatus != TetrisBoard.cubeStatus.empty &&
                         materialPropertyBlock.GetColor("_Color") == TetrisBoard.Instance.colorGarbage)
                     {
-                            Destroy(gameObject);
+                        if(PubVar.flags[(int)_type] == -1){
+                            PubVar.flags[(int)_type] = 1;
+                            HumanManager.Instance.playSound((int)_type);
                         }
+                        Destroy(gameObject);
+                    }
                 }
             }
         }
-        // speed += Time.deltaTime * speedIncrement;
-        // _rigidBody.velocity = Vector3.forward * speed;
-        //_animator.SetFloat("Speed", speed);
     }
-
 
 }

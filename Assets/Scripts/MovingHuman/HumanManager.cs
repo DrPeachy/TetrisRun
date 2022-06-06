@@ -21,6 +21,13 @@ public class HumanManager : MonoBehaviour
     //  UI
     public TextMeshProUGUI scoreText;
 
+    //  Audio
+    public AudioSource humanAudio;
+    public AudioSource catAudio;
+    public AudioSource dogAudio;
+    public AudioSource loseAudio;
+    public AudioSource winAudio;
+
     private void Awake() {
         Instance = this;
     }
@@ -70,9 +77,15 @@ public class HumanManager : MonoBehaviour
             switch(flag){
                 case 0:
                     humanCodes[i].height = 2;
+                    humanCodes[i]._type = HumanCode.type.human;
                     break;
-                default:
+                case 1:
                     humanCodes[i].height = 1;
+                    humanCodes[i]._type = HumanCode.type.cat;
+                    break;
+                case 2:
+                    humanCodes[i].height = 1;
+                    humanCodes[i]._type = HumanCode.type.dog;
                     break;
             }
             humanCodes[i].index = i;
@@ -108,8 +121,25 @@ public class HumanManager : MonoBehaviour
         }
         DataManager.Instance.playerScore += sum;
         scoreText.text = $"score: {DataManager.Instance.playerScore}";
+        winAudio.PlayOneShot(winAudio.clip);
+        for(int i = 0; i < 3; i++){
+            PubVar.flags[i] = -1;
+        }
     }
 
+    public void playSound(int index){
+        switch(index){
+            case 0:
+                humanAudio.PlayOneShot(humanAudio.clip);
+                break;
+            case 1:
+                catAudio.PlayOneShot(catAudio.clip);
+                break;
+            case 2:
+                dogAudio.PlayOneShot(dogAudio.clip);
+                break;
+        }
+    }
 
     //  check if all human die out
     void CheckGameOver(){
@@ -117,8 +147,10 @@ public class HumanManager : MonoBehaviour
             if(i != null) return;
         }
         Debug.Log("Gameover");
+        loseAudio.PlayOneShot(loseAudio.clip);
         StartCoroutine(LeaderBoard.Instance.SubmitScoreRoutine(DataManager.Instance.playerScore));
-        SceneManager.LoadScene("EndScene");
+        Time.timeScale = 0;
+        //SceneManager.LoadScene("EndScene");
     }
 
 }

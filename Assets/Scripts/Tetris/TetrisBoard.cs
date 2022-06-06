@@ -100,7 +100,7 @@ public class TetrisBoard : MonoBehaviour
                     width = Random.Range(2, 7);
                     for (int i = 0; i < boardLength; i++)
                     {
-                        if (i != gap)//i <= gap - width || i >= gap + width)
+                        if (i <= gap - width || i >= gap + width)
                         {
                             board[i, j].cubeStatus = cubeStatus.placed;
                             propertyBlock.SetColor("_Color", colorGarbage);
@@ -523,6 +523,8 @@ public class TetrisBoard : MonoBehaviour
             }
             if (lineFull)
             {
+                DataManager.Instance.playerScore += 500;
+
                 for (int i = 0; i < boardLength; i++)
                 {
                     board[i, j].cubeStatus = cubeStatus.empty;

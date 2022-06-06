@@ -53,6 +53,17 @@ public class HumanManager : MonoBehaviour
             }
         }
 #endif
+        int humanNumber = 0;
+        for (int i = 0; i < pathNumber; i++)
+        {
+            if (humans[i] != null)
+            {
+                humanNumber += 1;
+            }
+        }
+        Debug.Log(humanNumber);
+        DataManager.Instance.playerScore += Mathf.RoundToInt(Time.deltaTime * humanNumber * 10f);
+        scoreText.text = $"score: {DataManager.Instance.playerScore}";
     }
     void GenerateCreature(){
         //  clear out global height list
@@ -135,7 +146,7 @@ public class HumanManager : MonoBehaviour
                 sum += humanCodes[i].height * (int)(100f * multiplier);
             }
         }
-        DataManager.Instance.playerScore += sum;
+        //DataManager.Instance.playerScore += sum;
         scoreText.text = $"score: {DataManager.Instance.playerScore}";
         winAudio.PlayOneShot(winAudio.clip);
         for(int i = 0; i < 3; i++){
